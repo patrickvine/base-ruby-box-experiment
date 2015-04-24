@@ -1,0 +1,18 @@
+---
+- hosts: all
+  remote_user: deploy
+  sudo: yes
+
+  tasks:
+    - include: tasks/setup_dependencies.yml
+    - include: tasks/setup_mysql.yml
+    - include: tasks/setup_firewall.yml
+    - include: tasks/setup_nginx.yml
+
+  handlers:
+    - include: handlers/main.yml
+
+  vars_files:
+    - vars/vars.yml
+
+

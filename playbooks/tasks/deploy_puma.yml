@@ -1,0 +1,33 @@
+---
+
+# setup PUMA
+- name: install puma
+  command: bash -lc "cd {{ app_directory }} && gem install puma"
+
+- name: copy puma config template
+  template: src=templates/puma.rb.j2 dest={{ app_directory }}config/puma.rb
+
+- name: create puma tmp directory
+  file: path={{ app_directory }}tmp/puma/ state=directory
+
+- name: touch puma pid
+  file: path={{ app_directory }}tmp/puma/pid state=touch
+
+- name: touch puma state
+  file: path={{ app_directory }}tmp/puma/state state=touch
+
+- name: get pid id
+  command: cat {{ app_directory }}tmp/puma/pid
+  register: pid_id
+
+- name: restart puma
+  command: kill -s SIGUSR2 {{ pid_id.stdout }}
+  register: result
+  ignore_errors: True
+
+- name: start puma
+  command: bash -lc "cd {{ app_directory }} && puma"
+  when: result|failed
+
+
+

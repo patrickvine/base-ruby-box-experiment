@@ -1,0 +1,12 @@
+---
+- name: install dependencies
+  apt: name="{{ item }}" state=latest
+  with_items:
+   - mysql-server
+   - libmysqlclient-dev
+
+- name: start mysql server
+  command: /etc/init.d/mysql restart
+
+- name: add app user to mysql
+  command: bash -lc "echo \"GRANT ALL PRIVILEGES ON *.* TO '{{ mysql_database_user }}'@'localhost' IDENTIFIED BY '{{ mysql_database_password }}' WITH GRANT OPTION\" | mysql"

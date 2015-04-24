@@ -1,0 +1,20 @@
+defaults: &defaults
+  adapter: mysql2
+  username: {{ mysql_database_user }}
+  password: {{ mysql_database_password }}
+  encoding: utf8
+  reconnect: false
+  pool: 25
+  socket: /var/run/mysqld/mysqld.sock
+
+development: &development
+  <<: *defaults
+  database: {{ mysql_db_root_name }}_development
+
+test: &test
+  <<: *defaults
+  database: {{ mysql_db_root_name }}_test
+
+production: &production
+  <<: *defaults
+  database: {{ mysql_db_root_name }}_production

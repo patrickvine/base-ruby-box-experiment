@@ -1,0 +1,7 @@
+---
+ruby: ruby-2.0.0-p598
+app_name: app_name
+app_directory: /vagrant/
+mysql_db_root_name: app_db_name
+mysql_database_user: app_db_user
+mysql_database_password: app_db_password

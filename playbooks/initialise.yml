@@ -1,0 +1,13 @@
+---
+# add the working users to the box
+- hosts: all
+  remote_user: vagrant
+  sudo: yes
+
+  tasks:
+    - include: tasks/initialise_users.yml
+
+  vars_files:
+    - vars/vars.yml
+
+
