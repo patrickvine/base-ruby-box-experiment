@@ -31,6 +31,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Bridged networks make the machine appear as another physical device on
   # your network.
   #config.vm.network "public_network"
+  
+  # Use the vagrant-dns plugin, if available.
+  if RUBY_PLATFORM =~ /darwin/i
+    if Vagrant.has_plugin?("vagrant-dns")
+      config.dns.tld = "ubxd.dev"
+      config.dns.patterns = [/^.*ubxd.dev$/]
+    else
+      puts "installing the vagrant-dns plugin is recommended"
+      puts "see https://github.com/BerlinVagrant/vagrant-dns for more."
+    end
+  end
 
   # If true, then any SSH connections made will enable agent forwarding.
   # Default value: false
